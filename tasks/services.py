@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from .models import Task
 from typing import Optional
 from django.utils.timezone import now
+from tasks.config import AppConfig
 
 
 class TaskService:
@@ -66,3 +67,15 @@ class TaskService:
     def get_filtered_tasks(filters: dict) -> list:
         """Retrieve tasks based on filters."""
         return TaskRepository.get_filtered_tasks(**filters)
+
+    @staticmethod
+    def get_paginated_tasks(page: int):
+        """Retrieve paginated tasks."""
+        config = AppConfig()
+        page_size = config.default_pagination_size
+
+        # Simulated pagination logic (for demonstration purposes)
+        tasks = TaskRepository.get_all_tasks()
+        start = (page - 1) * page_size
+        end = start + page_size
+        return tasks[start:end]
