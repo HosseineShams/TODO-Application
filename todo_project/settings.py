@@ -72,6 +72,7 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=config.jwt_access_token_lifetime_minutes),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=config.jwt_refresh_token_lifetime_days),
+    'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
 MIDDLEWARE = [
