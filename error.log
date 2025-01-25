@@ -1,0 +1,85 @@
+ERROR 2025-01-25 22:40:53,129 views Task creation failed: {'due_date': [ErrorDetail(string='This field is required.', code='required')]}
+ERROR 2025-01-25 22:41:11,000 views Task creation failed: {'due_date': [ErrorDetail(string='This field is required.', code='required')]}
+ERROR 2025-01-25 22:42:00,913 views Task creation failed: {'due_date': [ErrorDetail(string='This field is required.', code='required')]}
+ERROR 2025-01-25 22:43:17,325 utils Error occurred: {'detail': ErrorDetail(string='Authorization header must contain two space-delimited values', code='authentication_failed'), 'code': ErrorDetail(string='bad_authorization_header', code='authentication_failed')} in <tasks.views.TaskDetailView object at 0x0000027D91455090>
+ERROR 2025-01-25 22:43:26,148 utils Error occurred: Task not found in <tasks.views.TaskDetailView object at 0x0000027D90E4BC50>
+CRITICAL 2025-01-25 22:44:28,259 utils Unhandled exception: Cannot use OrderingFilter on a view which does not have either a 'serializer_class', an overriding 'get_serializer_class' or 'ordering_fields' attribute.
+Traceback (most recent call last):
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "F:\desktop\Projects\TODO-Application\tasks\views.py", line 50, in get
+    tasks = ordering_backend.filter_queryset(request, tasks, self)
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 324, in filter_queryset
+    ordering = self.get_ordering(request, queryset, view)
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 239, in get_ordering
+    ordering = self.remove_invalid_fields(queryset, fields, view, request)
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 314, in remove_invalid_fields
+    valid_fields = [item[0] for item in self.get_valid_fields(queryset, view, {'request': request})]
+                                        ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 294, in get_valid_fields
+    return self.get_default_valid_fields(queryset, view, context)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 271, in get_default_valid_fields
+    raise ImproperlyConfigured(msg % self.__class__.__name__)
+django.core.exceptions.ImproperlyConfigured: Cannot use OrderingFilter on a view which does not have either a 'serializer_class', an overriding 'get_serializer_class' or 'ordering_fields' attribute.
+CRITICAL 2025-01-25 22:44:34,297 utils Unhandled exception: Cannot use OrderingFilter on a view which does not have either a 'serializer_class', an overriding 'get_serializer_class' or 'ordering_fields' attribute.
+Traceback (most recent call last):
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "F:\desktop\Projects\TODO-Application\tasks\views.py", line 50, in get
+    tasks = ordering_backend.filter_queryset(request, tasks, self)
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 324, in filter_queryset
+    ordering = self.get_ordering(request, queryset, view)
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 239, in get_ordering
+    ordering = self.remove_invalid_fields(queryset, fields, view, request)
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 314, in remove_invalid_fields
+    valid_fields = [item[0] for item in self.get_valid_fields(queryset, view, {'request': request})]
+                                        ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 294, in get_valid_fields
+    return self.get_default_valid_fields(queryset, view, context)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 271, in get_default_valid_fields
+    raise ImproperlyConfigured(msg % self.__class__.__name__)
+django.core.exceptions.ImproperlyConfigured: Cannot use OrderingFilter on a view which does not have either a 'serializer_class', an overriding 'get_serializer_class' or 'ordering_fields' attribute.
+CRITICAL 2025-01-25 22:45:01,978 utils Unhandled exception: Cannot use OrderingFilter on a view which does not have either a 'serializer_class', an overriding 'get_serializer_class' or 'ordering_fields' attribute.
+Traceback (most recent call last):
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "F:\desktop\Projects\TODO-Application\tasks\views.py", line 50, in get
+    tasks = ordering_backend.filter_queryset(request, tasks, self)
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 324, in filter_queryset
+    ordering = self.get_ordering(request, queryset, view)
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 239, in get_ordering
+    ordering = self.remove_invalid_fields(queryset, fields, view, request)
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 314, in remove_invalid_fields
+    valid_fields = [item[0] for item in self.get_valid_fields(queryset, view, {'request': request})]
+                                        ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 294, in get_valid_fields
+    return self.get_default_valid_fields(queryset, view, context)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 271, in get_default_valid_fields
+    raise ImproperlyConfigured(msg % self.__class__.__name__)
+django.core.exceptions.ImproperlyConfigured: Cannot use OrderingFilter on a view which does not have either a 'serializer_class', an overriding 'get_serializer_class' or 'ordering_fields' attribute.
+CRITICAL 2025-01-25 22:45:37,358 utils Unhandled exception: Cannot use OrderingFilter on a view which does not have either a 'serializer_class', an overriding 'get_serializer_class' or 'ordering_fields' attribute.
+Traceback (most recent call last):
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "F:\desktop\Projects\TODO-Application\tasks\views.py", line 50, in get
+    tasks = ordering_backend.filter_queryset(request, tasks, self)
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 324, in filter_queryset
+    ordering = self.get_ordering(request, queryset, view)
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 239, in get_ordering
+    ordering = self.remove_invalid_fields(queryset, fields, view, request)
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 314, in remove_invalid_fields
+    valid_fields = [item[0] for item in self.get_valid_fields(queryset, view, {'request': request})]
+                                        ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 294, in get_valid_fields
+    return self.get_default_valid_fields(queryset, view, context)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\filters.py", line 271, in get_default_valid_fields
+    raise ImproperlyConfigured(msg % self.__class__.__name__)
+django.core.exceptions.ImproperlyConfigured: Cannot use OrderingFilter on a view which does not have either a 'serializer_class', an overriding 'get_serializer_class' or 'ordering_fields' attribute.
+ERROR 2025-01-25 22:48:55,855 utils Error occurred: Task not found in <tasks.views.TaskDetailView object at 0x0000023B6A76A7B0>
+ERROR 2025-01-25 22:49:02,791 utils Error occurred: Task not found in <tasks.views.TaskDetailView object at 0x0000023B6A796990>
+ERROR 2025-01-25 22:49:10,328 utils Error occurred: Task not found in <tasks.views.TaskDetailView object at 0x0000023B6A09ED70>
+ERROR 2025-01-25 22:49:22,700 views Task creation failed: {'due_date': [ErrorDetail(string='This field is required.', code='required')]}

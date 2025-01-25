@@ -11,6 +11,10 @@ from tasks.serializers import TaskSerializer
 from tasks.config import AppConfig  # For default pagination size
 from django.core.exceptions import ValidationError
 from rest_framework.exceptions import NotFound
+from tasks.serializers import TaskSerializer
+import logging
+
+logger = logging.getLogger('tasks')
 
 
 class CustomPagination(PageNumberPagination):
@@ -37,16 +41,19 @@ class TaskListView(APIView):
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_class = TaskFilter  # Use TaskFilter for filtering
+    serializer_class = TaskSerializer  # Specify the serializer class
     ordering_fields = ['due_date', 'priority', 'created_at']  # Allow sorting by these fields
 
     def get(self, request):
         """List all tasks with filtering, sorting, and pagination."""
+        logger.info(f"TaskListView GET request by user {request.user}")
         tasks = TaskService.get_all_tasks()
 
-        # Apply filtering and sorting
+        # Apply filtering
         filter_backend = DjangoFilterBackend()
         tasks = filter_backend.filter_queryset(request, tasks, self)
-        
+
+        # Apply sorting
         ordering_backend = OrderingFilter()
         tasks = ordering_backend.filter_queryset(request, tasks, self)
 
@@ -54,14 +61,18 @@ class TaskListView(APIView):
         paginator = CustomPagination()
         paginated_tasks = paginator.paginate_queryset(tasks, request)
         serialized_tasks = TaskSerializer(paginated_tasks, many=True).data
+        logger.debug(f"Tasks retrieved: {len(serialized_tasks)} items.")
         return paginator.get_paginated_response(serialized_tasks)
 
     def post(self, request):
         """Create a new task."""
+        logger.info(f"TaskListView POST request by user {request.user}")
         serializer = TaskSerializer(data=request.data)
         if serializer.is_valid():
             task = TaskService.create_task(serializer.validated_data)
+            logger.info(f"Task created: {task.title}")
             return Response(TaskSerializer(task).data, status=status.HTTP_201_CREATED)
+        logger.error(f"Task creation failed: {serializer.errors}")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
