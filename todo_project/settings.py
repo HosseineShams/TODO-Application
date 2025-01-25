@@ -61,12 +61,12 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': config.default_pagination_size,  # Use AppConfig for page size
-    'PAGE_SIZE': 10,  # Default page size
+    'PAGE_SIZE': AppConfig().default_pagination_size,
     'DEFAULT_FILTER_BACKENDS': (
-        'django_filters.rest_framework.DjangoFilterBackend',  # For filtering
-        'rest_framework.filters.OrderingFilter',             # For sorting
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.OrderingFilter',
     ),
+    'EXCEPTION_HANDLER': 'tasks.utils.custom_exception_handler',  # Custom exception handler
 }
 
 # JWT Settings
