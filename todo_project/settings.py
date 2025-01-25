@@ -64,7 +64,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': config.default_pagination_size,  # Use AppConfig for page size
     'PAGE_SIZE': 10,  # Default page size
     'DEFAULT_FILTER_BACKENDS': (
-        'django_filters.rest_framework.DjangoFilterBackend',
+        'django_filters.rest_framework.DjangoFilterBackend',  # For filtering
+        'rest_framework.filters.OrderingFilter',             # For sorting
     ),
 }
 

@@ -3,7 +3,10 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.filters import OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 from tasks.services import TaskService
+from tasks.filters import TaskFilter
 from tasks.config import AppConfig  # For default pagination size
 from django.core.exceptions import ValidationError
 
@@ -30,10 +33,22 @@ class CustomPagination(PageNumberPagination):
 class TaskListView(APIView):
     """Handle listing all tasks and creating a new task."""
     permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_class = TaskFilter  # Use TaskFilter for filtering
+    ordering_fields = ['due_date', 'priority', 'created_at']  # Allow sorting by these fields
 
     def get(self, request):
-        """List all tasks with pagination."""
+        """List all tasks with filtering, sorting, and pagination."""
         tasks = TaskService.get_all_tasks()
+
+        # Apply filtering and sorting
+        filter_backend = DjangoFilterBackend()
+        tasks = filter_backend.filter_queryset(request, tasks, self)
+        
+        ordering_backend = OrderingFilter()
+        tasks = ordering_backend.filter_queryset(request, tasks, self)
+
+        # Apply pagination
         paginator = CustomPagination()
         paginated_tasks = paginator.paginate_queryset(tasks, request)
         serialized_tasks = [
