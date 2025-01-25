@@ -1,3 +1,31 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+from django.utils.timezone import now
 
-# Create your models here.
+
+class Task(models.Model):
+    PRIORITY_CHOICES = [
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+    ]
+
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    due_date = models.DateTimeField()
+    completed = models.BooleanField(default=False)
+    priority = models.CharField(
+        max_length=10,
+        choices=PRIORITY_CHOICES,
+        default='medium',
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def clean(self):
+        # Ensure the due_date is not in the past
+        if self.due_date < now():
+            raise ValidationError("The due date cannot be in the past.")
+
+    def __str__(self):
+        return self.title
