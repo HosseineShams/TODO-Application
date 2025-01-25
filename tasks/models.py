@@ -23,9 +23,19 @@ class Task(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def clean(self):
+        """Model-level validation for Task."""
         # Ensure the due_date is not in the past
         if self.due_date < now():
             raise ValidationError("The due date cannot be in the past.")
+
+        # Ensure the title is not blank
+        if not self.title.strip():
+            raise ValidationError("The title cannot be blank.")
+
+    def save(self, *args, **kwargs):
+        """Override save to include validation."""
+        self.full_clean()  # Call clean() before saving
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title

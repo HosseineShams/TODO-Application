@@ -6,6 +6,7 @@ from typing import Optional
 from django.utils.timezone import now
 from tasks.config import AppConfig
 from django.utils.dateparse import parse_datetime  
+from django.core.exceptions import ValidationError
 
 class TaskService:
     """Service layer for handling business logic related to tasks."""
@@ -15,20 +16,19 @@ class TaskService:
     @handle_exceptions
     def create_task(data: dict) -> Task:
         """Create a new task with business logic validation."""
-        due_date_str = data.get('due_date')
-        if due_date_str:
-            # Convert due_date string to a datetime object
-            due_date = parse_datetime(due_date_str)
+        due_date = data.get('due_date')
+
+        # Check if due_date is already a datetime object
+        if isinstance(due_date, str):
+            due_date = parse_datetime(due_date)
             if not due_date:
                 raise ValidationError("Invalid due_date format. Must be ISO-8601 compliant.")
-            
-            # Validate that due_date is not in the past
-            if due_date < now():
-                raise ValidationError("The due date cannot be in the past.")
-            
-            data['due_date'] = due_date  # Update the data with the parsed datetime object
 
-        # Delegate to repository to create the task
+        # Validate that due_date is not in the past
+        if due_date < now():
+            raise ValidationError("The due date cannot be in the past.")
+
+        data['due_date'] = due_date  # Ensure the data contains a valid datetime object
         return TaskRepository.create_task(**data)
 
     @staticmethod
@@ -41,21 +41,22 @@ class TaskService:
             return None
 
         # Parse and validate due_date
-        due_date_str = data.get('due_date')
-        if due_date_str:
-            # Convert due_date string to a datetime object
-            due_date = parse_datetime(due_date_str)
+        due_date = data.get('due_date')
+
+        # Check if due_date is already a datetime object
+        if isinstance(due_date, str):
+            due_date = parse_datetime(due_date)
             if not due_date:
                 raise ValidationError("Invalid due_date format. Must be ISO-8601 compliant.")
-            
-            # Validate that due_date is not in the past
-            if due_date < now():
-                raise ValidationError("The due date cannot be in the past.")
-            
-            # Update the parsed datetime in the data dictionary
-            data['due_date'] = due_date
 
-        # Delegate to repository to update the task
+        # Validate that due_date is not in the past
+        if due_date < now():
+            raise ValidationError("The due date cannot be in the past.")
+
+        # Update the parsed datetime in the data dictionary
+        data['due_date'] = due_date
+
+        # Delegate to the repository to update the task
         return TaskRepository.update_task(task, **data)
 
     @staticmethod
