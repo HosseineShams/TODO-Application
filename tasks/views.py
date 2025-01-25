@@ -12,6 +12,8 @@ from tasks.config import AppConfig  # For default pagination size
 from django.core.exceptions import ValidationError
 from rest_framework.exceptions import NotFound
 from tasks.serializers import TaskSerializer
+from django.core.cache import cache
+from hashlib import md5
 import logging
 
 logger = logging.getLogger('tasks')
@@ -40,13 +42,22 @@ class TaskListView(APIView):
     """Handle listing all tasks and creating a new task."""
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, OrderingFilter]
-    filterset_class = TaskFilter  # Use TaskFilter for filtering
-    serializer_class = TaskSerializer  # Specify the serializer class
-    ordering_fields = ['due_date', 'priority', 'created_at']  # Allow sorting by these fields
+    filterset_class = TaskFilter
+    serializer_class = TaskSerializer
+    ordering_fields = ['due_date', 'priority', 'created_at']
 
     def get(self, request):
-        """List all tasks with filtering, sorting, and pagination."""
+        """List all tasks with caching, filtering, sorting, and pagination."""
         logger.info(f"TaskListView GET request by user {request.user}")
+
+        # Generate a unique cache key based on filters, sorting, and user
+        cache_key = self._generate_cache_key(request)
+        cached_response = cache.get(cache_key)
+        if cached_response:
+            logger.info(f"Cache hit for key: {cache_key}")
+            return cached_response
+
+        # Fetch and process tasks if not in cache
         tasks = TaskService.get_all_tasks()
 
         # Apply filtering
@@ -61,8 +72,21 @@ class TaskListView(APIView):
         paginator = CustomPagination()
         paginated_tasks = paginator.paginate_queryset(tasks, request)
         serialized_tasks = TaskSerializer(paginated_tasks, many=True).data
-        logger.debug(f"Tasks retrieved: {len(serialized_tasks)} items.")
-        return paginator.get_paginated_response(serialized_tasks)
+        response = paginator.get_paginated_response(serialized_tasks)
+
+        # Set renderer context and render response
+        response.accepted_renderer = self.renderer_classes[0]()
+        response.accepted_media_type = request.accepted_media_type
+        response.renderer_context = {
+            'request': request,
+            'view': self,
+        }
+        response.render()
+
+        # Cache the rendered response
+        cache.set(cache_key, response, timeout=60 * 5)  # Cache for 5 minutes
+        logger.info(f"Cache set for key: {cache_key}")
+        return response
 
     def post(self, request):
         """Create a new task."""
@@ -71,9 +95,22 @@ class TaskListView(APIView):
         if serializer.is_valid():
             task = TaskService.create_task(serializer.validated_data)
             logger.info(f"Task created: {task.title}")
+            # Invalidate cache after creating a task
+            self._invalidate_cache()
             return Response(TaskSerializer(task).data, status=status.HTTP_201_CREATED)
         logger.error(f"Task creation failed: {serializer.errors}")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def _generate_cache_key(self, request):
+        """Generate a unique cache key based on filters, sorting, and pagination."""
+        query_params = sorted(request.GET.items())  # Sort query params to ensure consistent keys
+        query_string = md5(str(query_params).encode('utf-8')).hexdigest()
+        return f"task_list:{request.user.id}:{query_string}"
+
+    def _invalidate_cache(self):
+        """Invalidate task list cache."""
+        cache.clear()
+        logger.info("Task list cache invalidated")
 
 
 class TaskDetailView(APIView):

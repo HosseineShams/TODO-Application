@@ -83,3 +83,94 @@ ERROR 2025-01-25 22:48:55,855 utils Error occurred: Task not found in <tasks.vie
 ERROR 2025-01-25 22:49:02,791 utils Error occurred: Task not found in <tasks.views.TaskDetailView object at 0x0000023B6A796990>
 ERROR 2025-01-25 22:49:10,328 utils Error occurred: Task not found in <tasks.views.TaskDetailView object at 0x0000023B6A09ED70>
 ERROR 2025-01-25 22:49:22,700 views Task creation failed: {'due_date': [ErrorDetail(string='This field is required.', code='required')]}
+CRITICAL 2025-01-25 23:02:02,092 utils Unhandled exception: The response content must be rendered before it can be pickled.
+Traceback (most recent call last):
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "F:\desktop\Projects\TODO-Application\tasks\views.py", line 78, in get
+    cache.set(cache_key, response, timeout=60 * 5)  # Cache for 5 minutes
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\django\core\cache\backends\locmem.py", line 53, in set
+    pickled = pickle.dumps(value, self.pickle_protocol)
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\response.py", line 99, in __getstate__
+    state = super().__getstate__()
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\django\template\response.py", line 60, in __getstate__
+    raise ContentNotRenderedError(
+        "The response content must be rendered before it can be pickled."
+    )
+django.template.response.ContentNotRenderedError: The response content must be rendered before it can be pickled.
+CRITICAL 2025-01-25 23:03:02,840 utils Unhandled exception: The response content must be rendered before it can be pickled.
+Traceback (most recent call last):
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "F:\desktop\Projects\TODO-Application\tasks\views.py", line 78, in get
+    cache.set(cache_key, response, timeout=60 * 5)  # Cache for 5 minutes
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\django\core\cache\backends\locmem.py", line 53, in set
+    pickled = pickle.dumps(value, self.pickle_protocol)
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\response.py", line 99, in __getstate__
+    state = super().__getstate__()
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\django\template\response.py", line 60, in __getstate__
+    raise ContentNotRenderedError(
+        "The response content must be rendered before it can be pickled."
+    )
+django.template.response.ContentNotRenderedError: The response content must be rendered before it can be pickled.
+CRITICAL 2025-01-25 23:03:10,970 utils Unhandled exception: The response content must be rendered before it can be pickled.
+Traceback (most recent call last):
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "F:\desktop\Projects\TODO-Application\tasks\views.py", line 78, in get
+    cache.set(cache_key, response, timeout=60 * 5)  # Cache for 5 minutes
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\django\core\cache\backends\locmem.py", line 53, in set
+    pickled = pickle.dumps(value, self.pickle_protocol)
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\response.py", line 99, in __getstate__
+    state = super().__getstate__()
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\django\template\response.py", line 60, in __getstate__
+    raise ContentNotRenderedError(
+        "The response content must be rendered before it can be pickled."
+    )
+django.template.response.ContentNotRenderedError: The response content must be rendered before it can be pickled.
+CRITICAL 2025-01-25 23:04:20,602 utils Unhandled exception: .accepted_renderer not set on Response
+Traceback (most recent call last):
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "F:\desktop\Projects\TODO-Application\tasks\views.py", line 78, in get
+    response.render()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\response.py", line 59, in rendered_content
+    assert renderer, ".accepted_renderer not set on Response"
+           ^^^^^^^^
+AssertionError: .accepted_renderer not set on Response
+CRITICAL 2025-01-25 23:04:21,622 utils Unhandled exception: .accepted_renderer not set on Response
+Traceback (most recent call last):
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "F:\desktop\Projects\TODO-Application\tasks\views.py", line 78, in get
+    response.render()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\response.py", line 59, in rendered_content
+    assert renderer, ".accepted_renderer not set on Response"
+           ^^^^^^^^
+AssertionError: .accepted_renderer not set on Response
+CRITICAL 2025-01-25 23:04:41,045 utils Unhandled exception: .accepted_renderer not set on Response
+Traceback (most recent call last):
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "F:\desktop\Projects\TODO-Application\tasks\views.py", line 78, in get
+    response.render()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Hossein\Envs\todo\Lib\site-packages\rest_framework\response.py", line 59, in rendered_content
+    assert renderer, ".accepted_renderer not set on Response"
+           ^^^^^^^^
+AssertionError: .accepted_renderer not set on Response
+ERROR 2025-01-25 23:06:18,982 utils Error occurred: Task not found in <tasks.views.TaskDetailView object at 0x000001E8E1DAE490>
